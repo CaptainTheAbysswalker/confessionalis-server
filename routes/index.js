@@ -135,11 +135,11 @@ const initRoutes = (router, mongoose) => {
             if (logined[0].expiration - Date.now()) {
               await Login.update(
                 { id: userData[0]._id },
-                { $set: { expiration: 3600000 + Date.now() } }
+                { $set: { expiration: 72 * 3600000 + Date.now() } }
               );
               ctx.cookies.set("auth", logined[0].token, {
                 httpOnly: false,
-                expires: new Date(Date.now() + 3600000)
+                expires: new Date(Date.now() + 3600000 * 72)
               });
               ctx.body = jwt.decode(logined[0].token, secret);
             } else {
@@ -157,11 +157,11 @@ const initRoutes = (router, mongoose) => {
             await Login.create({
               id: userData[0]._id,
               token: token,
-              expiration: 3600000 + Date.now()
+              expiration: 72 * 3600000 + Date.now()
             });
             ctx.cookies.set("auth", token, {
               httpOnly: false,
-              expires: new Date(Date.now() + 3600000)
+              expires: new Date(Date.now() + 72 * 3600000)
             });
             console.log("Cookies:", ctx.cookies.get("auth"));
             ctx.body = jwt.decode(token, secret);
