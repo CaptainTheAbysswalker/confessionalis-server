@@ -39,7 +39,7 @@ app.use(passport.initialize());
 
 app.use(router.routes());
 
-const server = app.listen(3004);
+const server = app.listen(process.env.PORT || 3004);
 
 findUsers = async () => {
   const onlineNow = await onlineUsers.find({});
